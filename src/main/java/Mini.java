@@ -8,8 +8,8 @@ public class Mini {
     public Mini (String jsonString) {
 
         JSONObject jsonObject = new JSONObject (jsonString);
-        text = jsonObject.getString("Text");
-        advertiser = new Advertiser(jsonObject.getString("Name"), jsonObject.getString("Address"));
+        text = jsonObject.getString ("Text");
+        advertiser = new Advertiser (jsonObject.getString("Name"), jsonObject.getString("Address"));
     }
 
     public String getText() {
