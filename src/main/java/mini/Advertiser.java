@@ -1,3 +1,5 @@
+package mini;
+
 public class Advertiser {
 
     private String name;

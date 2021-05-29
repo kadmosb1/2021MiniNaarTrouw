@@ -1,3 +1,6 @@
+package mini;
+
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,13 +27,13 @@ class MiniTest {
         String tekst100 = "{" + advertiser + ", 'Text' : 'Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ' }";
         String tekst101 = "{" + advertiser + ", 'Text' : 'Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test T' }";
 
-        assertEquals (0.0, new Mini (tekst0).getPrice (), 0.001);
-        assertEquals (5.0, new Mini (tekst1).getPrice (), 0.001);
-        assertEquals (5.0, new Mini (tekst24).getPrice (), 0.001);
-        assertEquals (5.0, new Mini (tekst25).getPrice (), 0.001);
-        assertEquals (5.2, new Mini (tekst26).getPrice (), 0.001);
-        assertEquals (19.8, new Mini (tekst99).getPrice (), 0.001);
-        assertEquals (18.0, new Mini (tekst100).getPrice (), 0.001);
-        assertEquals (18.18, new Mini (tekst101).getPrice (), 0.001);
+        assertEquals (0.0, new MiniTrouw(new JSONObject (tekst0)).getPrice (), 0.001);
+        assertEquals (5.0, new MiniTrouw (new JSONObject (tekst1)).getPrice (), 0.001);
+        assertEquals (5.0, new MiniTrouw (new JSONObject (tekst24)).getPrice (), 0.001);
+        assertEquals (5.0, new MiniTrouw (new JSONObject (tekst25)).getPrice (), 0.001);
+        assertEquals (5.2, new MiniTrouw (new JSONObject (tekst26)).getPrice (), 0.001);
+        assertEquals (19.8, new MiniTrouw (new JSONObject (tekst99)).getPrice (), 0.001);
+        assertEquals (18.0, new MiniTrouw (new JSONObject (tekst100)).getPrice (), 0.001);
+        assertEquals (18.18, new MiniTrouw (new JSONObject (tekst101)).getPrice (), 0.001);
     }
 }

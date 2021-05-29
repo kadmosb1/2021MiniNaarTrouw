@@ -1,18 +1,22 @@
+package sender;
+
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Emailer {
+import mini.*;
+
+public abstract class Emailer implements ISender {
 
     protected static final String EMAIL_MINIMARKT = "minimarkt@dpgmedia.nl";
-    protected static final String EMAIL_TROUW = "mini@trouw.nl";
-    protected static final String SUBJECT = "Graag plaatsing van onderstaande mini in Trouw";
 
     private MimeMessage message;
 
-    public void prepare (Mini mini) {
+    protected abstract String getEmailTo ();
+    protected abstract String getSubject ();
+
+    protected void prepare (Mini mini) {
 
         // Om dit te laten werken, moet natuurlijk een mailserver zijn geïnstalleerd op 'host'.
         String host = "localhost";
@@ -26,12 +30,16 @@ public class Emailer {
         try {
             message = new MimeMessage (session);
             message.setFrom (new InternetAddress (EMAIL_MINIMARKT));
-            message.addRecipient (Message.RecipientType.TO, new InternetAddress (EMAIL_TROUW));
-            message.setSubject (SUBJECT);
+            message.addRecipient (Message.RecipientType.TO, new InternetAddress (getEmailTo ()));
+            message.setSubject (getSubject ());
 
             // Bereid de tekst voor de mail voor.
             Advertiser advertiser = mini.getAdvertiser ();
-            message.setText (String.format ("Tekst: %s%nPrijs: € %.2f%n%nNaam adverteerder: %s%nAdres: %s%n",
+            message.setText (String.format ("= Tekst: %s%n" +
+                                            "= Prijs: € %.2f%n" +
+                                            "= %n" +
+                                            "= Naam adverteerder: %s%n" +
+                                            "= Adres: %s",
                                             mini.getText(), mini.getPrice(), advertiser.getName(), advertiser.getAddress()));
         }
         catch (MessagingException mex) {
@@ -39,10 +47,14 @@ public class Emailer {
         }
     }
 
-    protected String getMessage () {
+    protected String getMessageString () {
 
         try {
-            return String.format ("Volgende mail wordt aan %s verzonden met onderwerp '%s':%n%n%s",
+            return String.format ("===============================================================================%n" +
+                                  "= Volgende mail wordt aan %s verzonden met onderwerp '%s':%n" +
+                                  "= %n" +
+                                  "%s%n" +
+                                  "===============================================================================%n",
                                   message.getAllRecipients () [0], message.getSubject (), message.getContent ());
         }
         catch (IOException | MessagingException e) {
@@ -51,10 +63,13 @@ public class Emailer {
         }
     }
 
-    public void send () {
+    public void send (Mini mini) {
+
+        // De mail wordt voorbereid.
+        prepare (mini);
 
         // Zolang de mailserver niet is geïnstalleerd, wordt de mail alleen op het scherm getoond.
-        System.out.println (getMessage ());
+        System.out.println (getMessageString());
 
         /*
          * // Het bericht wordt verzonden.
