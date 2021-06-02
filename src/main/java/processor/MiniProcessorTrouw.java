@@ -24,6 +24,6 @@ public class MiniProcessorTrouw extends MiniProcessor {
 
     @Override
     public ISender getSender () {
-        return new EmailerTrouw();
+        return SenderFactory.TROUW.createSender ();
     }
 }

@@ -38,11 +38,9 @@ public abstract class MiniProcessor implements Observer {
 
     public void update (Observable o, Object arg) {
 
-        JSONObject json = new JSONObject ((String) arg);
+        if (mustBePlacedInThisTitle ((JSONObject) arg)) {
 
-        if (mustBePlacedInThisTitle (json)) {
-
-            Mini mini = getMini (json);
+            Mini mini = getMini ((JSONObject) arg);
             ISender sender = getSender ();
             sender.send (mini);
         }
