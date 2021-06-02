@@ -7,6 +7,7 @@ import receiver.MarktplaatsReceiver;
 import mini.Mini;
 import sender.ISender;
 import sender.EmailerAD;
+import sender.SenderFactory;
 
 public class MiniProcessorAD extends MiniProcessor {
 
@@ -26,6 +27,6 @@ public class MiniProcessorAD extends MiniProcessor {
 
     @Override
     protected ISender getSender () {
-        return new EmailerAD();
+        return SenderFactory.AD.createSender ();
     }
 }
