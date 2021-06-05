@@ -20,5 +20,13 @@ public abstract class Mini {
         return advertiser;
     }
 
+    /*
+     * Als een prijs per letter bekend is kan op basis van de lengte van de tekst de totale prijs voor de Mini
+     * worden bepaald. Dit is bedoeld om duplicate code in de subclasses op te ruimen.
+     */
+    protected double getPrice (double pricePerCharacter) {
+        return text.length () * pricePerCharacter;
+    }
+
     public abstract double getPrice ();
 }

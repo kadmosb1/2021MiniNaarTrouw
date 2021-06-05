@@ -9,6 +9,6 @@ public class MiniAD extends Mini {
     }
 
     public double getPrice () {
-        return getText ().length () * 0.22;
+        return getPrice (0.22);
     }
 }
