@@ -5,7 +5,16 @@ public class MiniProcessor {
     private Mini mini;
 
     public MiniProcessor (String jsonString) {
-        mini = new Mini (jsonString);
+
+        JSONObject jsonMini = new JSONObject (jsonString);
+        String paper = jsonMini.getString ("Paper");
+
+        if (paper.equals ("Trouw")) {
+            mini = new MiniInTrouw (jsonMini);
+        }
+        else if (paper.equals ("AD")) {
+            mini = new MiniInAD (jsonMini);
+        }
     }
 
     public void process () {

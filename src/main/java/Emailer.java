@@ -1,14 +1,16 @@
-import javax.mail.*;
-import javax.mail.internet.*;
 import javax.activation.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
 public class Emailer {
 
     protected static final String EMAIL_MINIMARKT = "minimarkt@dpgmedia.nl";
-    protected static final String EMAIL_TROUW = "mini@trouw.nl";
-    protected static final String SUBJECT = "Graag plaatsing van onderstaande mini in Trouw";
+    protected static final String SUBJECT = "Graag plaatsing van onderstaande mini in ";
 
     private MimeMessage message;
 
@@ -20,14 +22,15 @@ public class Emailer {
         // Initialiseer de server.
         Properties properties = System.getProperties ();
         properties.setProperty ("mail.smtp.host", host);
+
         Session session = Session.getDefaultInstance (properties);
 
         // Bereid de mail voor.
         try {
             message = new MimeMessage (session);
-            message.setFrom (new InternetAddress (EMAIL_MINIMARKT));
-            message.addRecipient (Message.RecipientType.TO, new InternetAddress (EMAIL_TROUW));
-            message.setSubject (SUBJECT);
+            message.setFrom (new InternetAddress(EMAIL_MINIMARKT));
+            message.addRecipient (Message.RecipientType.TO, new InternetAddress (mini.getEmail()));
+            message.setSubject (SUBJECT + mini.getNameOfPaper());
 
             // Bereid de tekst voor de mail voor.
             Advertiser advertiser = mini.getAdvertiser ();
